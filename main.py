@@ -12,15 +12,14 @@ import time
 import sys
 
 # icon for use with growl notification
-ICON_URL = "http://cdn2.iconfinder.com/data/icons/crystalproject/128x128/apps/package_games.png"
+ICON_URL = "http://i.imgur.com/8CTk6.png"
+# user agent to be used by PRAW
 USER_AGENT = 'new /r/gamedeals notifier by & for /u/mpheus'
 
 growl = gntp.notifier.GrowlNotifier(
     applicationName = "/r/gamedeals notifier",
     notifications = ["New Deal"],
     defaultNotifications = ["New Deal"],
-    # hostname = "computer.example.com", # Defaults to localhost
-    # password = "abc123" # Defaults to a blank password
 )
 growl.register()
 
@@ -34,9 +33,10 @@ while True:
 		data = r.get_subreddit('gamedeals').get_new_by_date(limit=10)
 		for x in data:
 			if x.id not in already_done:
-				 # so that notification remains on the screen until closed
+				# so that notification remains on the screen until closed
 				stick = False if first_time else True
-				growl.notify(
+				# sending growl notification
+                growl.notify(
 					noteType = "New Deal",
 					title = x.domain,
 					description = x.title,
@@ -45,13 +45,18 @@ while True:
 					priority = 1,
 					callback = x.permalink
 				)
+                # adding uid of the post to `already_done` list
 				already_done.append(x.id)
 				print "Notified about", x.title, "at", time.strftime("%d %b - %I:%M:%S %p")
 				
 		print "Last checked for game deals at", time.strftime("%d %b - %I:%M:%S %p")
 		time.sleep(120)
 		first_time = False
-		
+	
+    # We want the script to run endlessly so we catch all the exceptions and then put the
+    # script to sleep for 120 seconds. Exceptions mostly occur due to not being able to reach
+    # the host.
+    
 	except Exception, e:
 		print "Error " + str(e) + " caught at " + time.strftime("%d %b - %I:%M:%S %p")
 		time.sleep(120)
