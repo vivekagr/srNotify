@@ -4,7 +4,7 @@ This script looks up the new section of  http://www.reddit.com/r/gamedeals  ever
 
 Growl notification looks something like-
 
-![screenshot](https://raw.github.com/vivekagr/srNotify/images/screenshot.png)
+![screenshot](https://raw.github.com/vivekagr/srNotify/master/images/screenshot.png)
 
 #Usage
 
