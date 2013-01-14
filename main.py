@@ -36,7 +36,7 @@ while True:
 				# so that notification remains on the screen until closed
 				stick = False if first_time else True
 				# sending growl notification
-                growl.notify(
+				growl.notify(
 					noteType = "New Deal",
 					title = x.domain,
 					description = x.title,
@@ -44,11 +44,10 @@ while True:
 					sticky = stick,
 					priority = 1,
 					callback = x.permalink
-				)
-                # adding uid of the post to `already_done` list
+					)
+				# adding uid of the post to already_done list
 				already_done.append(x.id)
 				print "Notified about", x.title, "at", time.strftime("%d %b - %I:%M:%S %p")
-				
 		print "Last checked for game deals at", time.strftime("%d %b - %I:%M:%S %p")
 		time.sleep(120)
 		first_time = False
